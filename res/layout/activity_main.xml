@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/findNearestButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/findNearestLabel" />
+
+    <Button
+        android:id="@+id/addStoreButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/addStoreLabel" />
+
+    <Button
+        android:id="@+id/catalogueButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/catalogueLabel" />
+
+    <Button
+        android:id="@+id/gameButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/gameLabel"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/aboutButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/aboutLabel" />
+</LinearLayout>
