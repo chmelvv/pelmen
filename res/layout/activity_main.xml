@@ -34,11 +34,5 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:text="@string/aboutLabel" />
-	<ru.yandex.yandexmapkit.MapView 
-	        android:id="@+id/map"  
-	        android:layout_width="fill_parent" 
-	        android:layout_height="fill_parent"  
-	        android:apiKey="bZNyz0CtiO34Cj8ryedFTLiiXKB0OJ3ACNEExHI5qDZKLLw0~EUf9hhNADD6aM7fVLkdIYvW1XQrHEvSx7vXeeMrO4-xuxcjuRBnKTwPOsk=" 
-	/>
 </LinearLayout>
 

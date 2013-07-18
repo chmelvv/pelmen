@@ -8,5 +8,8 @@
     <string name="catalogueLabel">Catalogue</string>
     <string name="gameLabel">Game</string>
     <string name="aboutLabel">About</string>
+    <string name="coordinatesText">Coordinates</string>
+    <string name="title_activity_android_gpstracking">AndroidGPSTrackingActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cvv.pelmen"
+    android:installLocation="internalOnly"
     android:versionCode="1"
-    android:versionName="1.0" android:installLocation="internalOnly">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +25,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="cvv.pelmen.FindNearest" >
+        </activity>
+        <activity
+            android:name="cvv.pelmen.AndroidGPSTrackingActivity"
+            android:label="@string/title_activity_android_gpstracking" >
         </activity>
     </application>
 
