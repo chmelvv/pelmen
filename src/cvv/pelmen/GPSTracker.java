@@ -59,6 +59,8 @@ public class GPSTracker extends Service implements LocationListener {
  
     // Declaring a Location Manager
     protected LocationManager locationManager;
+
+	public int getLongitude;
  
     public GPSTracker(Context context) {
         this.mContext = context;
@@ -75,9 +77,10 @@ public class GPSTracker extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
  
             // getting network status
-            isNetworkEnabled = locationManager
-            		.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
- 
+            isNetworkEnabled = false;
+//            locationManager
+//            		.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
             } else {

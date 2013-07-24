@@ -11,5 +11,7 @@
     <string name="coordinatesText">Coordinates</string>
     <string name="title_activity_android_gpstracking">AndroidGPSTrackingActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_store">AddStore</string>
+    <string name="title_activity_catalog">Catalog</string>
 
 </resources>

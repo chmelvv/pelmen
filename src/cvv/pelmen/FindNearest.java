@@ -1,44 +1,46 @@
-/**
- * 
- */
 package cvv.pelmen;
 
-import android.app.Activity;
+import ru.yandex.yandexmapkit.*;
+import ru.yandex.yandexmapkit.utils.GeoPoint;
 import android.os.Bundle;
-import android.widget.*;
+import android.app.Activity;
+import android.view.Menu;
 
-/**
- * @author Chmel-VV
- *
- */
 public class FindNearest extends Activity {
-			 
-@Override
-protected void onCreate(Bundle savedInstanceState){
-	super.onCreate(savedInstanceState);
-	
-	LinearLayout ll = new LinearLayout(this);
-	TextView textView = new TextView(this);
-	
-    GPSTracker gps = new GPSTracker(this);
-	if(gps.canGetLocation()){ 
-		//Getting Latitude and Longitude
-		textView.setText("Latitude: " + gps.getLatitude() + "\nLongitude: " + gps.getLongitude());
-		textView.setTextSize(50);
-		ll.addView(textView);
-	} else {
-		//Showing GPS Settings Alert Dialog
-		gps.showSettingsAlert();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.find_nearest);
+		
+		final MapView mMapView = (MapView) findViewById(R.id.mapView);
+		mMapView.showBuiltInScreenButtons(true);
+		mMapView.showFindMeButton(true);
+		mMapView.showJamsButton(true);
+		mMapView.showScaleView(true);
+		mMapView.showZoomButtons(true);
+		 
+		// Получаем MapController
+		MapController mMapController = mMapView.getMapController();
+		
+        GPSTracker gps = new GPSTracker(this);
+    	if(gps.canGetLocation()){ 
+    		//Getting Latitude and Longitude
+    		GeoPoint currentLocation = new GeoPoint(gps.getLatitude(),gps.getLongitude());
+    		mMapController.setPositionAnimationTo(currentLocation);
+    	} else {
+    		//Showing GPS Settings Alert Dialog
+    		gps.showSettingsAlert();
+    	}
+		 
+		mMapController.setZoomCurrent(5);
 	}
-	
-	// Really make views visible
-	setContentView(ll);
 
-}
-
-@Override
-protected void onResume() {
-    super.onResume();
-}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 
 }
