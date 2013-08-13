@@ -50,10 +50,10 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent fN = new Intent(this, FindNearest.class);
 				startActivity(fN);
 				break;
-			case R.id.addStoreButton:
-				Intent a = new Intent(this, AddStore.class);
-				startActivity(a);
-				break;
+//			case R.id.addStoreButton:
+//				Intent a = new Intent(this, AddStore.class);
+//				startActivity(a);
+//				break;
 				//@ TODO
 //			case R.id.catalogueButton:
 //				Intent c = new Intent(this, Catalog.class);

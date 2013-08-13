@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-	android:id="@+id/fN_linear_layout">
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+
+    <ru.yandex.yandexmapkit.MapView
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:apiKey="bZNyz0CtiO34Cj8ryedFTLiiXKB0OJ3ACNEExHI5qDZKLLw0~EUf9hhNADD6aM7fVLkdIYvW1XQrHEvSx7vXeeMrO4-xuxcjuRBnKTwPOsk="
+        android:layout_weight="1"
+    />
+    
 </LinearLayout>
