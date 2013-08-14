@@ -8,15 +8,19 @@ import ru.yandex.yandexmapkit.map.GeoCodeListener;
 import ru.yandex.yandexmapkit.overlay.Overlay;
 import ru.yandex.yandexmapkit.overlay.OverlayItem;
 import ru.yandex.yandexmapkit.overlay.balloon.BalloonItem;
+import ru.yandex.yandexmapkit.overlay.balloon.OnBalloonListener;
 import ru.yandex.yandexmapkit.utils.GeoPoint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 @TargetApi(18)
-public class FindNearest extends Activity implements GeoCodeListener{
+public class FindNearest extends Activity implements GeoCodeListener, OnBalloonListener{
     MapController mapController;
     OverlayManager overlayManager;
     MapView mapView;
@@ -26,13 +30,9 @@ public class FindNearest extends Activity implements GeoCodeListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.find_nearest);
 	
-		// Получаем объект MapView  
 		mapView = (MapView) findViewById(R.id.map); 
 		mapView.showBuiltInScreenButtons(true);
-		 
-		// Получаем объект MapController 
 		mapController = mapView.getMapController();
-		// Изменяем зум 
 		mapController.setZoomCurrent(11);
 
 		GPSTracker gps = new GPSTracker(this);
@@ -46,14 +46,14 @@ public class FindNearest extends Activity implements GeoCodeListener{
     	}
 
 		
-		// Получаем объект OverlayManager  
 		overlayManager = mapController.getOverlayManager();
 		
 		Resources res = getResources();
 		Overlay overlay = new Overlay(mapController);
 		
 		//Add Pelmen shop points to ArrayList
-		//@TODO convert to database store
+			//@TODO convert to database store
+			// DB structure: ID, Address, Phone, Timetable, Latitude, Longitude, Photo, Comments
 		ArrayList<GeoPoint> pelmenStore = new ArrayList<GeoPoint>();
 			pelmenStore.add(new GeoPoint(50.366064, 30.453759)); //вул. Ак.Глушкова, 31 а
 			pelmenStore.add(new GeoPoint(50.364564, 30.46356));  //вул. Ак.Заболотного, 46
@@ -65,18 +65,14 @@ public class FindNearest extends Activity implements GeoCodeListener{
 		//Add shops to the map
 		// Load required resources
         for (int g=0; g < pelmenStore.size(); g++) {
-			OverlayItem store = new OverlayItem(pelmenStore.get(g), res.getDrawable(R.drawable.small_pelmen));
-			overlay.addOverlayItem(store);
-			BalloonItem storeBalloon = new BalloonItem(this, store.getGeoPoint());
-			storeBalloon.setText("My address");
-			store.setBalloonItem(storeBalloon);
-			overlay.addOverlayItem(store);
+			OverlayItem overlayItem = new OverlayItem(pelmenStore.get(g), res.getDrawable(R.drawable.small_pelmen));
+			BalloonItem balloonItem = new BalloonItem(this, overlayItem.getGeoPoint());
+			balloonItem.setText("My address");
+			overlayItem.setBalloonItem(balloonItem);
+			balloonItem.setOnBalloonListener(this);
+			overlay.addOverlayItem(overlayItem);
 		}
 		
-        mapController.getDownloader().getGeoCode(this, new GeoPoint(50.366064, 30.453759)); 
-     		// Обрабатываем ответ о GeoCode 
-        		        
-		//Добавляем новый слой 
 		overlayManager.addOverlay(overlay);
 
 	}
@@ -94,4 +90,40 @@ public class FindNearest extends Activity implements GeoCodeListener{
         }
         return false;
     }
+
+	@Override
+	public void onBalloonAnimationEnd(BalloonItem arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBalloonAnimationStart(BalloonItem arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBalloonHide(BalloonItem arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBalloonShow(BalloonItem arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBalloonViewClick(BalloonItem balloonItem, View view) {
+		OverlayItem item = balloonItem.getOverlayItem();
+		
+		Double latitude = balloonItem.getOverlayItem().getGeoPoint().getLat();
+		Double longitude = balloonItem.getOverlayItem().getGeoPoint().getLon();
+		String uri = String.format("geo:%s,%s?z=16", latitude.toString(), longitude.toString());
+		
+    	Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    	startActivity(intent);
+	}
 }
