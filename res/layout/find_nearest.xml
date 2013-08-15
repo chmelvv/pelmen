@@ -11,6 +11,7 @@
         android:layout_height="0dip"
         android:apiKey="bZNyz0CtiO34Cj8ryedFTLiiXKB0OJ3ACNEExHI5qDZKLLw0~EUf9hhNADD6aM7fVLkdIYvW1XQrHEvSx7vXeeMrO4-xuxcjuRBnKTwPOsk="
         android:layout_weight="1"
-    />
+    >
+    </ru.yandex.yandexmapkit.MapView>
     
 </LinearLayout>

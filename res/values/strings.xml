@@ -13,5 +13,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_store">AddStore</string>
     <string name="title_activity_catalog">Catalog</string>
+    <string name="address_hint">Enter store address manually</string>
+    <string name="get_address_button">Get address from GPS</string>
 
 </resources>
