@@ -35,9 +35,7 @@
 	        android:layout_width="300dp"
 	        android:hint="Address ..."
 	        android:layout_height="wrap_content" 
-	        android:inputType="textPostalAddress|
-                       textCapWords|
-                       textNoSuggestions"/>
+	        android:inputType="textPostalAddress|textCapWords|textNoSuggestions"/>
 	
 	    <TextView
 	        android:id="@+id/or"
@@ -88,5 +86,6 @@
 		    android:layout_height="wrap_content"
 		    android:text="Shoot" />
 	</LinearLayout> 
+	
 	   
 </LinearLayout>
