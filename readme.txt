@@ -3,8 +3,9 @@ Mobile Android geolocation and marketing application for one semu-prepared food 
 
 User problems which I try to solve:
 +1) Find nearest retail store in Kyiv 
-	+1.1) Build route to it by default application
-	!1.2) Add all retail network info to DB
+	- 1.01) Draw 5km circle around store on map
+	+-1.1) Build route to it by default application
+	!-1.2) Add all retail network info to DB
 	1.3) Show more info about retail store store in balloon object
 2) Find full information about brand's products (ingredients) [and current prices]
 	Examples: 

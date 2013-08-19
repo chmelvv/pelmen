@@ -16,7 +16,8 @@
 		    android:id="@+id/get_coordinates_button"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Set current"/>
+		    android:text="Set current"
+		    android:onClick="getCoordinates"/>
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -50,7 +51,8 @@
 		    android:id="@+id/get_address_button"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Find automatically" />
+		    android:text="Find automatically"
+		    android:onClick="getAddress" />
 	    <TextView
 	        android:id="@+id/or"
 	        android:layout_width="wrap_content"
