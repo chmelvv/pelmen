@@ -1,18 +1,10 @@
 package cvv.pelmen;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,11 +42,22 @@ public class AddStore extends Activity {
 					//+ "&key=bZNyz0CtiO34Cj8ryedFTLiiXKB0OJ3ACNEExHI5qDZKLLw0~EUf9hhNADD6aM7fVLkdIYvW1XQrHEvSx7vXeeMrO4-xuxcjuRBnKTwPOsk="
 					+ "&format=json"
 					+ "&geocode="
-						+ lon.toString() + ","
-						+ lat.toString();
+						+ lon.getText().toString() + ","
+						+ lat.getText().toString();
+// http://geocode-maps.yandex.ru/1.x/?results=1&kind=house&format=json&geocode=30.52086642935999,50.46592397135805
+			
 			EditText address = (EditText) findViewById(R.id.address_field);
 			
-			
+			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		    if (networkInfo != null && networkInfo.isConnected()) {
+		        } 
+		    else {
+		            address.setText("No network connection available.");
+		        }
+		    }
+
+
 		
 /*	
  * 		{"response": 
@@ -69,31 +72,9 @@ public class AddStore extends Activity {
 	*/
 		
 		
-			HttpClient httpclient = new DefaultHttpClient();
-		    
-			try {
-				HttpResponse response = httpclient.execute(new HttpGet(URL));
-				StatusLine statusLine = response.getStatusLine();
-				    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-				        ByteArrayOutputStream out = new ByteArrayOutputStream();
-				        response.getEntity().writeTo(out);
-				        out.close();
-				        address.setText(out.toString());
-				        //..more logic
-				    } else{
-				        //Closes the connection.
-				        response.getEntity().getContent().close();
-				        throw new IOException(statusLine.getReasonPhrase());
-				    }
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		   
 		}
 	}
-}
+
 
