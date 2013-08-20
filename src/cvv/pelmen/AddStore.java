@@ -5,6 +5,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,8 +34,11 @@ public class AddStore extends Activity {
 	}
 	
 	public void getAddress(View view){
-		if (lat == null || lon == null) 
-			    Toast.makeText(this, "Please, enter Store coordinates first", Toast.LENGTH_SHORT).show();
+		if (lat == null || lon == null) {
+			Toast toast = Toast.makeText(this, "Please, enter Store coordinates first", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		}
 		else {
 			String URL = "http://geocode-maps.yandex.ru/1.x/?"
 					+ "results=1"
