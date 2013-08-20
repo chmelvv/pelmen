@@ -1,10 +1,25 @@
 package cvv.pelmen;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -12,12 +27,26 @@ import android.widget.Toast;
 
 public class AddStore extends Activity {
 	EditText lat, lon;
+	EditText address;
+	String httpResult;
+	private static final String DEBUG_TAG = "PelmenHttp";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_store);
 }
+	public String addSlashes(String str){
+		if(str==null) return "";
+
+		StringBuffer s = new StringBuffer ((String) str);
+		for (int i = 0; i < s.length(); i++)
+		if (s.charAt (i) == '\"')
+		s.insert (i++, '\\');
+		return s.toString();
+
+	}
+	
 	public void getCoordinates(View view){
 		
 		GPSTracker gps = new GPSTracker(this);
@@ -36,49 +65,109 @@ public class AddStore extends Activity {
 	public void getAddress(View view){
 		if (lat == null || lon == null) {
 			Toast toast = Toast.makeText(this, "Please, enter Store coordinates first", Toast.LENGTH_LONG);
-			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
 		else {
-			String URL = "http://geocode-maps.yandex.ru/1.x/?"
+			String url = "http://geocode-maps.yandex.ru/1.x/?"
 					+ "results=1"
+			//		+ "&lang=en-US"
 					+ "&kind=house"
-					//+ "&key=bZNyz0CtiO34Cj8ryedFTLiiXKB0OJ3ACNEExHI5qDZKLLw0~EUf9hhNADD6aM7fVLkdIYvW1XQrHEvSx7vXeeMrO4-xuxcjuRBnKTwPOsk="
 					+ "&format=json"
 					+ "&geocode="
 						+ lon.getText().toString() + ","
 						+ lat.getText().toString();
 // http://geocode-maps.yandex.ru/1.x/?results=1&kind=house&format=json&geocode=30.52086642935999,50.46592397135805
 			
-			EditText address = (EditText) findViewById(R.id.address_field);
+			address = (EditText) findViewById(R.id.address_field);
 			
 			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		    if (networkInfo != null && networkInfo.isConnected()) {
-		        } 
-		    else {
-		            address.setText("No network connection available.");
-		        }
-		    }
-
-
-		
-/*	
- * 		{"response": 
-			{"GeoObjectCollection":
-				{"metaDataProperty":
-					{"GeocoderResponseMetaData":
-						{"request":"30.36593901476908,50.45725574442445","found":"4","results":"10","Point":{"pos":"30.365939 50.457256"}}},"featureMember":[
-							{"GeoObject":{"metaDataProperty":{"GeocoderMetaData":{"kind":"house","text":"Украина, Киев, улица Феодоры Пушиной, 23","precision":"exact","AddressDetails":{"Country":{"AddressLine":"Киев, улица Феодоры Пушиной, 23","CountryNameCode":"UA","CountryName":"Украина","Locality":{"LocalityName":"Киев","Thoroughfare":{"ThoroughfareName":"улица Феодоры Пушиной","Premise":{"PremiseNumber":"23"}}}}}}},"description":"Киев, Украина","name":"улица Феодоры Пушиной, 23","boundedBy":{"Envelope":{"lowerCorner":"30.364179 50.45605","upperCorner":"30.368276 50.458665"}},"Point":{"pos":"30.366228 50.457358"}}},
-							{"GeoObject":{"metaDataProperty":{"GeocoderMetaData":{"kind":"street","text":"Украина, Киев, улица Феодоры Пушиной","precision":"street","AddressDetails":{"Country":{"AddressLine":"Киев, улица Феодоры Пушиной","CountryNameCode":"UA","CountryName":"Украина","Locality":{"LocalityName":"Киев","Thoroughfare":{"ThoroughfareName":"улица Феодоры Пушиной"}}}}}},"description":"Киев, Украина","name":"улица Феодоры Пушиной","boundedBy":{"Envelope":{"lowerCorner":"30.340868 50.456188","upperCorner":"30.371968 50.458292"}},"Point":{"pos":"30.355771 50.457375"}}},
-							{"GeoObject":{"metaDataProperty":{"GeocoderMetaData":{"kind":"locality","text":"Украина, Киев","precision":"other","AddressDetails":{"Country":{"AddressLine":"Киев","CountryNameCode":"UA","CountryName":"Украина","Locality":{"LocalityName":"Киев"}}}}},"description":"Украина","name":"Киев","boundedBy":{"Envelope":{"lowerCorner":"30.239439 50.213269","upperCorner":"30.825941 50.590765"}},"Point":{"pos":"30.522328 50.451095"}}},
-							{"GeoObject":{"metaDataProperty":{"GeocoderMetaData":{"kind":"country","text":"Украина","precision":"other","AddressDetails":{"Country":{"CountryNameCode":"UA","CountryName":"Украина"}}}},"name":"Украина","boundedBy":{"Envelope":{"lowerCorner":"22.135899 44.386438","upperCorner":"40.227511 52.379374"}},"Point":{"pos":"31.181700 48.541290"}}}]}}}
-	*/
-		
-		
-			
-		   
+		    	// Make async HTTP request. Result put in httpResult var
+		    	new DownloadWebpageTask().execute(url);
+		    	if (httpResult != null) {
+					try {
+					//	httpResult = addSlashes(httpResult);
+						JSONObject jsonResult =  new JSONObject(httpResult);
+						address.setText(jsonResult.get("text").toString());
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    		
+		    	}
+    	
+		    } 
+		    else Toast.makeText(this, "No network connection ;(", Toast.LENGTH_LONG).show();
+		        
 		}
 	}
+
+	private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+	    @Override
+	    protected String doInBackground(String... urls) {
+	          
+	        // params comes from the execute() call: params[0] is the url.
+	        try {
+	            return downloadUrl(urls[0]);
+	        } catch (IOException e) {
+	            return "Unable to retrieve web page. URL may be invalid.";
+	        }
+	    }
+	    // onPostExecute displays the results of the AsyncTask.
+	    @Override
+	    protected void onPostExecute(String result) {
+	       httpResult = result;
+	   }
+	    
+	 // Given a URL, establishes an HttpUrlConnection and retrieves
+	 // the web page content as a InputStream, which it returns as
+	 // a string.
+	 private String downloadUrl(String myurl) throws IOException {
+	     InputStream is = null;
+	     // Only display the first 500 characters of the retrieved
+	     // web page content.
+	     int len = 500;
+	         
+	     try {
+	         URL url = new URL(myurl);
+	         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	         conn.setReadTimeout(10000 /* milliseconds */);
+	         conn.setConnectTimeout(15000 /* milliseconds */);
+	         conn.setRequestMethod("GET");
+	         conn.setDoInput(true);
+	         // Starts the query
+	         conn.connect();
+	         int response = conn.getResponseCode();
+	         Log.d(DEBUG_TAG, "The response is: " + response);
+	         is = conn.getInputStream();
+
+	         // Convert the InputStream into a string
+	         String contentAsString = readIt(is, len);
+	         return contentAsString;
+	         
+	     // Makes sure that the InputStream is closed after the app is
+	     // finished using it.
+	     } finally {
+	         if (is != null) {
+	             is.close();
+	         } 
+	     }
+	 }
+	 
+	// Reads an InputStream and converts it to a String.
+	 public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+	     Reader reader = null;
+	     reader = new InputStreamReader(stream, "UTF-8");        
+	     char[] buffer = new char[len];
+	     reader.read(buffer);
+	     return new String(buffer);
+	 }
+	}
+}
+
+
 
 
