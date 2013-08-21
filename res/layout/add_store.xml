@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#E0E0E0" >
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -23,20 +24,25 @@
 	        android:layout_height="wrap_content"
 	        android:text=" OR enter :"
 	        android:textSize="@dimen/form_field" />
+
 	    <EditText
 	        android:id="@+id/lat_field"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:hint="Latitude: NN.NNNNNN" 
-	        android:inputType="numberDecimal"
-	        android:imeOptions="actionNext"/>
+	        android:layout_marginRight="10dp"
+	        android:background="#FFFFFF"
+	        android:hint="Latitude: NN.NNNNNN"
+	        android:imeOptions="actionNext"
+	        android:inputType="numberDecimal" />
+
 	    <EditText
 	        android:id="@+id/lon_field"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:hint="Longitude: NN.NNNNNN" 
-	        android:inputType="number"
-	        android:imeOptions="actionNext"/>
+	        android:inputType="numberDecimal"
+	        android:imeOptions="actionNext"
+	        android:background="#FFFFFF"/>
 	</LinearLayout>
 	<LinearLayout
 	    android:layout_width="fill_parent"
@@ -63,8 +69,9 @@
 	        android:id="@+id/address_field"
 	        android:layout_width="300dp"
 	        android:hint="Address ..."
-	        android:layout_height="wrap_content" 
-	        android:inputType="textPostalAddress"/>
+	        android:layout_height="70dp" 
+	        android:inputType="textPostalAddress|textMultiLine"
+	        android:background="#FFFFFF"/>
 	</LinearLayout>
 	<LinearLayout
 	    android:layout_width="fill_parent"
@@ -80,7 +87,8 @@
 	        android:layout_width="300dp"
 	        android:hint="Phone +nn(nnn)nnn-nn-nn"
 	        android:layout_height="wrap_content" 
-	        android:inputType="phone"/>
+	        android:inputType="phone"
+	        android:background="#FFFFFF"/>
     </LinearLayout>
 	<LinearLayout
 	    android:layout_width="fill_parent"
@@ -121,7 +129,8 @@
 	    	android:layout_width="match_parent"
 	    	android:layout_height="100dp"
 	    	android:hint="Comments ....\n comments ..."
-	    	android:inputType="textMultiLine" />
+	    	android:inputType="textMultiLine" 
+	    	android:background="#FFFFFF"/>
 	</LinearLayout>
 	<Button
 	    android:id="@+id/send_button"
