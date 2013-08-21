@@ -26,6 +26,7 @@ public class Geocode {
 	private String  httpResult;
 
 	public String getAddressByCoordinates(Context mContext, String url){
+		String result="";
 		
 		ConnectivityManager connMgr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -39,15 +40,15 @@ public class Geocode {
 	    		if (first != -1) {
 	    			first += "\"text\":\"".length()-1;
 	    			Integer second = httpResult.indexOf('"', first+1);
-	    			return httpResult.substring(first, second);
+	    			result = httpResult.substring(first, second);
 	    		} else { 
-	    			return "Error";
+	    			result = "Error";
 	    		}
 	    	}
 	    }
-		return ""; 
-	    
-	}
+	   return result;
+}
+	
 	private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 	    @Override
 	    protected String doInBackground(String... urls) {
