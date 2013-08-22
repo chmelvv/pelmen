@@ -1,5 +1,6 @@
 package cvv.pelmen;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,26 +14,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddStore extends Activity {
-	EditText lat, lon;
-	String httpResult;
+	private EditText lat, lon;
+	private String httpResult;
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 777;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_store);
 }
 
-	public void getCoordinates(View view){
-		
+public void getCoordinates(View view){
 		GPSTracker gps = new GPSTracker(this);
     	if(gps.canGetLocation()){ 
     		//Getting Latitude and Longitude
@@ -44,10 +47,10 @@ public class AddStore extends Activity {
     		//Showing GPS Settings Alert Dialog
     		gps.showSettingsAlert();
     	}
-	}
+}
 	
 
-	public void getAddress(View view){
+public void getAddress(View view){
 		if (lat == null || lon == null) 
 			Toast.makeText(this, "Please, enter Store coordinates first", Toast.LENGTH_LONG).show();
 		else {
@@ -96,9 +99,9 @@ public class AddStore extends Activity {
 		    else Toast.makeText(this, "No network connection ;(", Toast.LENGTH_LONG).show();
 		        
 		}
-	}
+}
 
-	private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 	    @Override
 	    protected String doInBackground(String... urls) {
 	          
@@ -159,5 +162,30 @@ public class AddStore extends Activity {
 	     }
 	     return buff;
 	 }
+}
+	
+	public void shootPhoto(View view){
+		 Intent shootPhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		 startActivityForResult(shootPhotoIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+		 
+	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		switch (requestCode) {
+			case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE: {
+				if (resultCode == RESULT_OK) handleCameraPhoto();
+				break;
+			} 
+
+		} 
+	}
+
+	private void handleCameraPhoto() {
+		// Save photo to def location
+		File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Pelmen");
+		
+		
 	}
 }

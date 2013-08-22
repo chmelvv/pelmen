@@ -104,7 +104,8 @@
 		    android:id="@+id/shoot_photo"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Shoot" />
+		    android:text="Shoot"
+		    android:onClick="shootPhoto" />
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
