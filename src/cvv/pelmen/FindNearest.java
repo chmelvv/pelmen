@@ -61,6 +61,14 @@ public class FindNearest extends Activity implements GeoCodeListener, OnBalloonL
 			pelmenStore.add(new GeoPoint(50.366064, 30.453759)); //вул. Братиславская, 14 б
 			pelmenStore.add(new GeoPoint(50.366064, 30.453759)); //пр. Перемоги, 87
 			pelmenStore.add(new GeoPoint(50.459761, 30.363603)); // вул. Василя Стуса 9
+			
+			pelmenStore.add(new GeoPoint(50.529965, 30.606243)); //fake
+			pelmenStore.add(new GeoPoint(50.52515, 30.511486)); //fake
+			pelmenStore.add(new GeoPoint(50.508952, 30.412609)); //fake
+			pelmenStore.add(new GeoPoint(50.416032, 30.60487)); //fake
+			pelmenStore.add(new GeoPoint(50.40616, 30.668728)); //fake
+			pelmenStore.add(new GeoPoint(50.300504, 30.612595)); //fake
+			pelmenStore.add(new GeoPoint(50.4202, 30.44986)); //fake
 		
 		//Add shops to the map
 		// Load required resources
