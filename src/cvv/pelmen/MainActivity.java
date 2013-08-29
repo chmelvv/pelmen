@@ -59,10 +59,10 @@ public class MainActivity extends Activity implements OnClickListener {
 //				Intent c = new Intent(this, Catalog.class);
 //				startActivity(c);
 //				break;
-//			case R.id.gameButton:
-//				Intent g = new Intent(this, Game.class);
-//				startActivity(g);
-//				break;
+			case R.id.gameButton:
+				Intent g = new Intent(this, Memory.class);
+				startActivity(g);
+				break;
 //			case R.id.aboutButton:
 //				Intent ab = new Intent(this, FindNearest.class);
 //				startActivity(ab);

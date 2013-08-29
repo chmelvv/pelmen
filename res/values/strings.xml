@@ -15,5 +15,13 @@
     <string name="title_activity_catalog">Catalog</string>
     <string name="address_hint">Enter store address manually</string>
     <string name="get_address_button">Get address from GPS</string>
+	<string-array name="type">
+        <item>New Game</item>
+        <item>4 X 4</item>
+        <item>4 X 5</item>
+        <item>4 X 6</item>
+        <item>5 X 6</item>
+        <item>6 X 6</item>
+    </string-array>
 
 </resources>

@@ -43,6 +43,12 @@
             android:label="@string/title_activity_add_store"
             android:parentActivityName="cvv.pelmen.MainActivity" >
         </activity>
+        <activity
+            android:name="cvv.pelmen.Memory"
+            android:label="MemoryGame"
+            android:parentActivityName="cvv.pelmen.MainActivity" >
+        </activity>
+        
         </application>
 
 </manifest>

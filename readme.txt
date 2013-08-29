@@ -15,6 +15,11 @@ User problems which I try to solve:
 3) [Create Memory game with brand products]
 	Examples:
 		http://www.aviyehuda.com/blog/2010/07/29/memory-game-android-application/
+		
+4) About
+How to make clickable link:
+   		//  TextView url = ((TextView)findViewById(R.id.myWebSite));
+     //   Linkify.addLinks(url, Linkify.WEB_URLS); 
 
 *[] - second priority tasks
 
