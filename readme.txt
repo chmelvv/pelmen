@@ -12,7 +12,7 @@ User problems which I try to solve:
 	Examples: 
 		http://www.dv.mk.ua/market-prop/
 		http://myasolyub.com.ua/catalog/napivfafricat#prettyPhoto 
-3) [Create Memory game with brand products]
++3) Create Memory game with brand products
 	Examples:
 		http://www.aviyehuda.com/blog/2010/07/29/memory-game-android-application/
 		
